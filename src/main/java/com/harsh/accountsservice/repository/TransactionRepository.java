@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface TransactionRepository extends MongoRepository<Transaction,String> {
     List<Transaction> findByAccountNumberEquals(String accountNumber);
+            void deleteTransactionsByAccountNumber(String accountNumber);
 }

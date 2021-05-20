@@ -9,41 +9,28 @@ import com.harsh.accountsservice.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Path;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
 @AllArgsConstructor
-public class AccountController {
+public class WriteControllers {
 
     private final AccountService accountService;
     @PostMapping("/create")
-    public Account create(@RequestBody Account account) {
+    public Account create(@Valid @RequestBody Account account) {
         return accountService.save(account);
-    }
-
-    @GetMapping("/all")
-    public List<Account> all() {
-        return accountService.findAll();
     }
 
     @PostMapping("/sendMoney")
     public Transaction sendMoney(
-            @RequestBody TransferBalanceRequest transferBalanceRequest) {
+            @Valid @RequestBody TransferBalanceRequest transferBalanceRequest) {
         return accountService.sendMoney(transferBalanceRequest);
     }
-
-
-    @GetMapping("/statement")
-    public AccountStatement getStatement(
-            @RequestBody AccountStatementRequest accountStatementRequest){
-        return accountService.getStatement(accountStatementRequest.getAccountNumber());
+    @DeleteMapping("/delete/{acc_no}")
+    public String deleteAccount(@PathVariable("acc_no") String acc_no){
+        return accountService.deleteAccountByAccountNumber(acc_no);
     }
-
-    @GetMapping("/statement/{acc_no}")
-    public AccountStatement getStatementDemo1(@PathVariable("acc_no") String acc_no){
-        return accountService.getStatement(acc_no);
-    }
-
 }
