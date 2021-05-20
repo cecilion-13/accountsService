@@ -14,4 +14,6 @@ public interface AccountService {
             TransferBalanceRequest transferBalanceRequest
     );
     AccountStatement getStatement(String accountNumber);
+    Account getAccountByEmail(String email);
+    String deleteAccountByAccountNumber(String accountNumber);
 }
